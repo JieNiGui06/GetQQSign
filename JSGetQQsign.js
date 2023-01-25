@@ -1,5 +1,5 @@
 
-
+module.exports = OnRequest;
 var sign = null;
 
 !function(n, t) {
@@ -412,18 +412,12 @@ function get_sign(data){
     return sign(data)
 };
 
-var url = require('url');
 
-//1.默认情况下，如果url路径中有中文，则会对中文进行URI编码，所以服务端要想获取中文需要对url进行URI解码
-console.log(encodeURI(req.url));
-
-// 2.url.parse 方法可以将一个 URL 路径解析为一个方便操作的对象
-// 将第二个可选参数指定为 true， 表示将结果中的 query 解析为一个对象
-var parseObj = url.parse(req.url, true).query;
-
-var pathname = parseObj.pathname; //相当于无参数的url路径
+ 
+function OnRequest(request, response){
+    response.send(get_sign(""));
+    response.end();
+}
 
 //var data = '{"comm":{"cv":4747474,"ct":24,"format":"json","inCharset":"utf-8","outCharset":"utf-8","notice":0,"platform":"yqq.json","needNewCode":1,"uin":0,"g_tk_new_20200303":5381,"g_tk":5381},"req_1":{"module":"musicToplist.ToplistInfoServer","method":"GetAll","param":{}}}'
 
-var data = parseObj.data;
-console.log(get_sign(data));
